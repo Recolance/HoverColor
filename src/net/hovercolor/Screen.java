@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
@@ -21,6 +20,7 @@ import javax.swing.JPanel;
 public class Screen{
 	
 	private static Screen screen;
+	private static final int MAX_COLOR_SAVES = 6;
 	
 	private JFrame frame;
 	private JPanel colorDisplayBox;
@@ -44,7 +44,7 @@ public class Screen{
 	}
 	
 	private void setFrame(){
-		this.frame = new JFrame();
+		this.frame = new JFrame("Hover Color");
 		this.frame.setSize(new Dimension(300, 300));
 		this.frame.setLayout(new BoxLayout(this.frame.getContentPane(), BoxLayout.Y_AXIS));
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,10 +73,10 @@ public class Screen{
 	private void setBottomSavedColorsSection(){
 		JPanel bottomContainer = new JPanel(new FlowLayout());
 		
-		this.colorSaves = new JPanel[5];
+		this.colorSaves = new JPanel[MAX_COLOR_SAVES];
 		
 		HoverColor color = new HoverColor(255, 255, 255);
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < MAX_COLOR_SAVES; i++){
 			JPanel colorPanel = new JPanel();
 			colorPanel.setPreferredSize(new Dimension(25, 25));
 			colorPanel.setBackground(color.getColor());
@@ -112,7 +112,7 @@ public class Screen{
 	public void addSavedColor(HoverColor hoverColor){
 		JPanel[] colorSaves = this.colorSaves;
 		
-		for(int i = 4; i >= 0; i--){
+		for(int i = (MAX_COLOR_SAVES - 1); i >= 0; i--){
 			if(i - 1 == -1) break;
 			Color colorToApply = colorSaves[i - 1].getBackground();
 			colorSaves[i].setBackground(colorToApply);
